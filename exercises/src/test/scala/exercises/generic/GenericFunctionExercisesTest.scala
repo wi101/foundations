@@ -10,9 +10,13 @@ class GenericFunctionExercisesTest extends AnyFunSuite with ScalaCheckDrivenProp
   // Exercise 1: Pair
   ////////////////////
 
-  test("Pair swap") {}
+  test("Pair swap") {
+    assert(Pair(0, 1).swap == Pair(1, 0))
+  }
 
-  test("Pair map") {}
+  test("Pair map") {
+    assert(Pair(4, 2).map(identity) == Pair(4, 2))
+  }
 
   test("Pair zipWith") {}
 

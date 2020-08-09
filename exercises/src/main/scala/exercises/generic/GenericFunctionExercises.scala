@@ -15,13 +15,11 @@ object GenericFunctionExercises {
   case class Pair[A](first: A, second: A) {
     // 1a. Implement `swap` which exchanges `first` and `second`
     // such as Pair("John", "Doe").swap == Pair("Doe", "John")
-    def swap: Pair[A] =
-      ???
+    def swap: Pair[A] = Pair(second, first)
 
     // 1b. Implement `map` which applies a function to `first` and `second`
     // such as Pair("John", "Doe").map(_.length) == Pair(4,3)
-    def map[To](update: A => To): Pair[To] =
-      ???
+    def map[To](update: A => To): Pair[To] = Pair(update(first), update(second))
 
     // 1c. Implement `zipWith` which merges two Pairs using a `combine` function
     // such as Pair(0, 2).zipWith(Pair(3, 4))((x, y) => x + y) == Pair(3, 6)
