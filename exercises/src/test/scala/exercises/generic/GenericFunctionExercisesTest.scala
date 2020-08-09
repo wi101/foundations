@@ -1,8 +1,14 @@
 package exercises.generic
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 import exercises.generic.GenericFunctionExercises._
+import org.scalacheck.{Arbitrary, Gen}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
+
+import scala.util.Try
 
 class GenericFunctionExercisesTest extends AnyFunSuite with ScalaCheckDrivenPropertyChecks {
 
@@ -18,9 +24,9 @@ class GenericFunctionExercisesTest extends AnyFunSuite with ScalaCheckDrivenProp
     assert(Pair(4, 2).map(identity) == Pair(4, 2))
   }
 
-  test("Pair zipWith") {}
-
   test("Pair decoded") {}
+
+  test("Pair zipWith") {}
 
   test("Pair productNames") {}
 

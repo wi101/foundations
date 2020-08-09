@@ -3,6 +3,8 @@ package exercises.generic
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+import scala.util.{Failure, Success, Try}
+
 object GenericFunctionExercises {
 
   ////////////////////
@@ -68,7 +70,7 @@ object GenericFunctionExercises {
   val isEven: Predicate[Int] =
     Predicate((number: Int) => number % 2 == 0)
 
-  val isOddPositive: Predicate[Int] =
+  lazy val isOddPositive: Predicate[Int] =
     isEven.flip && isPositive
 
   case class Predicate[A](eval: A => Boolean) {
