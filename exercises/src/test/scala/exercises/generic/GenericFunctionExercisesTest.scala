@@ -24,11 +24,17 @@ class GenericFunctionExercisesTest extends AnyFunSuite with ScalaCheckDrivenProp
     assert(Pair(4, 2).map(identity) == Pair(4, 2))
   }
 
-  test("Pair decoded") {}
+  test("Pair decoded") {
+    assert(decoded == Pair("Functional", "Programming"))
+  }
 
-  test("Pair zipWith") {}
+  test("Pair zipWith") {
+    assert(Pair(0, 2).zipWith(Pair(3, 4))((x, y) => x + y) == Pair(3, 6))
+  }
 
-  test("Pair productNames") {}
+  test("Pair productNames") {
+    assert(products == Pair(Product("Coffee", 2.5), Product("Plane ticket", 329.99)))
+  }
 
   ////////////////////////////
   // Exercise 2: Predicate
