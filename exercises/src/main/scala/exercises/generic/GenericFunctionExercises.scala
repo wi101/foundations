@@ -84,7 +84,7 @@ object GenericFunctionExercises {
     //         (isEven && isPositive)(-4) == false
     //         (isEven && isPositive)(-7) == false
     def &&(other: Predicate[A]): Predicate[A] =
-      ???
+      Predicate(a => eval(a) && other(a))
 
     // 2b. Implement `||` that combines two predicates using logical or
     // such as (isEven || isPositive)(12) == true
@@ -92,14 +92,20 @@ object GenericFunctionExercises {
     //         (isEven || isPositive)(-4) == true
     // but     (isEven || isPositive)(-7) == false
     def ||(other: Predicate[A]): Predicate[A] =
-      ???
+      Predicate(a => eval(a) || other(a))
 
     // 2c. Implement `flip` that reverses a predicate
     // such as isEven.flip(11) == true
-    def flip: Predicate[A] =
-      ???
+    def flip: Predicate[A] = Predicate(!eval(_))
+
+    def contramap[To](zoom: To => A): Predicate[To] =
+      Predicate(user => eval(zoom(user)))
   }
 
+  object Predicate {
+    def False[A]: Predicate[A] = Predicate(_ => false)
+    def True[A]: Predicate[A]  = Predicate(_ => true)
+  }
   // 2d. Implement `isValidUser`, a predicate which checks if a `User` is:
   // * an adult (18 years old or more) and
   // * their name is longer than 3 characters and
@@ -113,8 +119,19 @@ object GenericFunctionExercises {
   case class User(name: String, age: Int)
 
   lazy val isValidUser: Predicate[User] =
-    ???
+    byUser(_.age)(isBiggerThan(18)) &&
+      byUser(_.name)(isLongerThan(3) && isCapitalized)
 
+  def isLongerThan(min: Int): Predicate[String] = isBiggerThan(min).contramap(_.length)
+  def isCapitalized: Predicate[String]          = Predicate(str => str.capitalize == str)
+
+  def f[From, To](p: Predicate[From])(zoom: To => From): Predicate[To] =
+    Predicate(user => p.eval(zoom(user)))
+
+  def isBiggerThan(min: Int): Predicate[Int] =
+    Predicate(_ >= min)
+
+  def byUser[To](f: User => To)(subPredicate: Predicate[To]): Predicate[User] = subPredicate.contramap(f)
   ////////////////////////////
   // Exercise 3: JsonDecoder
   ////////////////////////////
